@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="home">
+    <div data-role="header">
+        <h1>Feedback Form</h1>
+    </div>
+    <div data-role="content">
+        <form id="feedbackForm">
+            <div data-role="fieldcontain">
+                <label for="quality">Quality:</label>
+                <select name="quality" id="quality" data-role="slider">
+                    <option value="bad">Bad</option>
+                    <option value="average">Average</option>
+                    <option value="good">Good</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="service">Service:</label>
+                <select name="service" id="service" data-role="slider">
+                    <option value="poor">Poor</option>
+                    <option value="satisfactory">Satisfactory</option>
+                    <option value="excellent">Excellent</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="recommend">Would you recommend us?</label>
+                <select name="recommend" id="recommend" data-role="slider">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="comments">Comments:</label>
+                <textarea name="comments" id="comments"></textarea>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <button type="submit" class="ui-btn ui-btn-b">Submit</button>
+        </form>
+    </div>
+</div>
+
+<div data-role="page" id="response">
+    <div data-role="header">
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
+        <h1>Feedback Response</h1>
+    </div>
+    <div data-role="content">
+        <p id="qualityResponse"></p>
+        <p id="serviceResponse"></p>
+        <p id="recommendResponse"></p>
+        <p id="commentsResponse"></p>
+        <p id="emailResponse"></p>
+    </div>
+</div>
+
+<script>
+    $(document).on("pagecreate", "#home", function() {
+        $("#feedbackForm").on("submit", function(e) {
+            e.preventDefault();
+            var quality = $("#quality").val();
+            var service = $("#service").val();
+            var recommend = $("#recommend").val();
+            var comments = $("#comments").val();
+            var email = $("#email").val();
+            $("#qualityResponse").text("Quality: " + quality);
+            $("#serviceResponse").text("Service: " + service);
+            $("#recommendResponse").text("Recommend: " + recommend);
+            $("#commentsResponse").text("Comments: " + comments);
+            $("#emailResponse").text("Email: " + email);
+            $.mobile.changePage("#response");
+        });
+    });
+</script>
+
+</body>
+</html>

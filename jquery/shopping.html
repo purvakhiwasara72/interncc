@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-commerce Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="home">
+    <div data-role="header">
+        <h1>E-commerce Store</h1>
+    </div>
+    <div data-role="content">
+        <ul data-role="listview" id="itemList">
+            <li><a href="#" class="add-to-cart" data-name="Item 1" data-price="50">$50 - Item 1</a></li>
+            <li><a href="#" class="add-to-cart" data-name="Item 2" data-price="75">$75 - Item 2</a></li>
+            <li><a href="#" class="add-to-cart" data-name="Item 3" data-price="100">$100 - Item 3</a></li>
+            <li><a href="#" class="add-to-cart" data-name="Item 4" data-price="60">$60 - Item 4</a></li>
+            <li><a href="#" class="add-to-cart" data-name="Item 5" data-price="85">$85 - Item 5</a></li>
+            <li><a href="#" class="add-to-cart" data-name="Item 6" data-price="110">$110 - Item 6</a></li>
+        </ul>
+        <a href="#cart" class="ui-btn ui-btn-b ui-corner-all" data-role="button">View Cart</a>
+    </div>
+</div>
+
+<div data-role="page" id="cart">
+    <div data-role="header">
+        <a href="#home" class="ui-btn ui-icon-home ui-btn-icon-left">Home</a>
+        <h1>Shopping Cart</h1>
+    </div>
+    <div data-role="content">
+        <ul data-role="listview" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </ul>
+        <p id="totalPrice">Total: $0</p>
+        <a href="#" class="ui-btn ui-btn-b ui-corner-all" id="checkoutBtn" data-role="button">Checkout</a>
+    </div>
+</div>
+
+<script>
+    var cartItems = [];
+
+    $(document).on("pagecreate", "#home", function() {
+        $(".add-to-cart").on("click", function(e) {
+            e.preventDefault();
+            var itemName = $(this).data("name");
+            var itemPrice = $(this).data("price");
+            var item = { name: itemName, price: itemPrice };
+            cartItems.push(item);
+            updateCart();
+        });
+    });
+
+    function updateCart() {
+        var cartList = $("#cartItems");
+        cartList.empty();
+        var totalPrice = 0;
+        $.each(cartItems, function(index, item) {
+            var listItem = $("<li>").text(item.name + " - $" + item.price);
+            cartList.append(listItem);
+            totalPrice += parseFloat(item.price);
+        });
+        cartList.listview("refresh");
+        $("#totalPrice").text("Total: $" + totalPrice.toFixed(2));
+    }
+
+    $(document).on("pagebeforeshow", "#cart", function() {
+        updateCart();
+    });
+</script>
+
+</body>
+</html>
